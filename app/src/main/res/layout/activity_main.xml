@@ -1,16 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.activities.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:orientation="vertical"
+        tools:context=".ui.activities.MainActivity">
+
+        //-------------------Summury---------------------
+
+        <LinearLayout
+            style="@style/summary">
+
+            <LinearLayout style="@style/summary_block.left"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/rating_et"
+                        style="@style/summary_edit_text"
+                        android:inputType="number"
+                        android:text="5"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    style="@style/summary_description"
+                    android:text="@string/text_rating"
+                    />
+
+            </LinearLayout>
+
+            <View style="@style/summary_divider"/>
+
+            <LinearLayout style="@style/summary_block.center">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/code_lines_et"
+                        style="@style/summary_edit_text"
+                        android:inputType="number"
+                        android:text="5"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    style="@style/summary_description"
+                    android:text="@string/text_code_lines"
+                    />
+            </LinearLayout>
+
+            <View style="@style/summary_divider"/>
+
+            <LinearLayout style="@style/summary_block.right">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/projects_et"
+                        style="@style/summary_edit_text"
+                        android:inputType="number"
+                        android:text="5"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    style="@style/summary_description"
+                    android:text="@string/text_projects"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+
+            >
+
+
+            //-------------------Phone-----------------------
+
+            <LinearLayout style="@style/list_item">
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_phone_black_24dp"/>
+
+                <LinearLayout style="@style/list_item_information">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:id="@+id/phone_et"
+                            style="@style/list_item_edit_text"
+                            android:hint="@string/text_phone"
+                            android:inputType="phone"
+                            android:text="+38(050)907-48-18"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/icon.right"
+                    android:src="@drawable/ic_phone_in_talk_black_24dp"/>
+            </LinearLayout>
+
+            <View style="@style/list_item_divider"/>
+
+
+            //--------------------Email----------------------
+
+            <LinearLayout style="@style/list_item">
+
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_mail_black_24dp"/>
+
+                <LinearLayout style="@style/list_item_information">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:id="@+id/email_et"
+                            style="@style/list_item_edit_text"
+                            android:hint="@string/text_email"
+                            android:inputType="textEmailAddress"
+                            android:text="dudnik2104@gmail.com"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/icon.right"
+                    android:src="@drawable/ic_send_black_24dp"/>
+            </LinearLayout>
+
+            <View style="@style/list_item_divider"/>
+
+            //--------------------VK----------------------
+
+            <LinearLayout style="@style/list_item">
+
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_social_vk_black_24dp"/>
+
+                <LinearLayout style="@style/list_item_information">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:id="@+id/vk_et"
+                            style="@style/list_item_edit_text"
+                            android:hint="@string/text_vk_profile"
+                            android:inputType="textUri"
+                            android:text="vk.com/sanches_da"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/icon.right"
+                    android:src="@drawable/ic_visibility_black_24dp"/>
+            </LinearLayout>
+
+            <View style="@style/list_item_divider"/>
+
+
+            //--------------------Git----------------------
+
+            <LinearLayout style="@style/list_item">
+
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_social_github_black_24dp"/>
+
+                <LinearLayout style="@style/list_item_information">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:id="@+id/git_1_et"
+                            style="@style/list_item_edit_text"
+                            android:hint="@string/text_git_profile"
+                            android:inputType="textUri"
+                            android:text="github.com/Sanches-da/DevIntensive"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/icon.right"
+                    android:src="@drawable/ic_visibility_black_24dp"/>
+            </LinearLayout>
+
+            <View style="@style/list_item_divider"/>
+
+
+            //--------------------About----------------------
+
+            <LinearLayout style="@style/list_item">
+
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_account_circle_black_24dp"/>
+
+                <LinearLayout
+                    style="@style/list_item_information"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:id="@+id/about_et"
+                            style="@style/list_item_edit_text"
+                            android:hint="@string/text_about"
+                            android:inputType="textMultiLine"
+                            android:text="Программист 1С, решил развиваться в сторону новых технологий. Изучаю Java и воспользовался возможностью изучить разработку под OS Android"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View style="@style/list_item_divider"/>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
