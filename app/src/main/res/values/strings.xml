@@ -8,4 +8,6 @@
     <string name="text_vk_profile">Профиль в VK</string>
     <string name="text_git_profile">Репозиторий</string>
     <string name="text_about">О себе</string>
+    <string name="my_profile">Мой профиль</string>
+    <string name="colaborators">Команда</string>
 </resources>
