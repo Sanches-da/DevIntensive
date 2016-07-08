@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/login_screen"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              tools:context=".ui.activities.AuthActivity"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/login_bg"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout style="@style/login_main_block">
+
+        <LinearLayout style="@style/login_inside_block">
+            <TextView style="@style/login_header"
+                    android:text="@string/sign_in"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/login_et"
+                    style="@style/login_field"
+                    android:hint="@string/text_email"
+                    android:inputType="textEmailAddress"
+                    android:text=""
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/password_et"
+                    style="@style/login_field"
+                    android:hint="@string/text_password"
+                    android:inputType="textPassword"
+                    android:text=""
+                    />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/login_inside_block">
+
+            <TextView
+                android:id="@+id/login_btn"
+                style="@style/login_button.red"
+                android:text="@string/sign_in"
+                />
+
+            <TextView
+                android:id="@+id/forgot_pass_btn"
+                style="@style/login_button"
+                android:text="@string/text_forgot_password"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

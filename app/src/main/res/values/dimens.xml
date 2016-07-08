@@ -17,6 +17,7 @@
 
     <!-- Spaces -->
     <dimen name="spacing_small_8">8dp</dimen>
+    <dimen name="spacing_normal_14">14dp</dimen>
     <dimen name="spacing_normal_16">16dp</dimen>
     <dimen name="spacing_medial_24">24dp</dimen>
     <dimen name="spacing_medial_28">28dp</dimen>
@@ -37,4 +38,8 @@
     <dimen name="text_28sp">28sp</dimen>
 
     <dimen name="fab_right_space">8dp</dimen>
+    <dimen name="placeholder_photo_size_90">90dp</dimen>
+
+    <dimen name="profile_photo_width">512dp</dimen>
+    <dimen name="profile_photo_height">256dp</dimen>
 </resources>

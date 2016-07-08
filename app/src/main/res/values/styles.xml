@@ -17,7 +17,7 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-   </style>
+    </style>
 
     <style name="icon">
         <item name="android:layout_width">@dimen/size_small_24</item>
@@ -151,7 +151,7 @@
         <item name="android:paddingRight">@dimen/spacing_normal_16</item>
         <item name="android:paddingLeft">@dimen/spacing_normal_16</item>
         <item name="android:paddingBottom">@dimen/spacing_small_8</item>
-        <item name="android:background">@drawable/header_bg</item>
+        <item name="android:background">@drawable/user_bg</item>
     </style>
 
     <style name="drawer_avatar">
@@ -190,8 +190,71 @@
         <item name="android:layout_height">@dimen/profile_image_size</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:src">@drawable/header_bg</item>
-        <item name="android:fitsSystemWindows">true</item>
+    </style>
 
+    <style name="login_main_block">
+        <item name="android:background">@color/color_white</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_larger_72</item>
+        <item name="android:layout_marginRight">@dimen/spacing_larger_72</item>
+        <item name="android:padding">@dimen/spacing_normal_14</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:elevation">@dimen/spacing_small_8</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="login_inside_block">
+        <item name="android:layout_margin">@dimen/spacing_normal_14</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="login_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_medial_28</item>
+        <item name="android:layout_marginRight">@dimen/spacing_medial_28</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:text">Забыли пароль?</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/color_gray_light</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+    </style>
+
+    <style name="login_button.red">
+        <item name="android:layout_marginBottom">@dimen/spacing_normal_16</item>
+        <item name="android:paddingTop">@dimen/spacing_normal_14</item>
+        <item name="android:paddingBottom">@dimen/spacing_normal_14</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:background">@color/color_red</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+    </style>
+
+    <style name="login_header">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_red</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_24sp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="login_field">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:enabled">true</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textColorHint">@color/color_gray</item>
+        <item name="android:focusable">true</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal_16</item>
     </style>
 
 </resources>
