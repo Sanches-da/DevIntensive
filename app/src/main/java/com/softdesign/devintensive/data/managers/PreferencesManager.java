@@ -1,6 +1,7 @@
 package com.softdesign.devintensive.data.managers;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.DevintensiveApplication;
@@ -32,5 +33,25 @@ public class PreferencesManager {
 
         return res;
     }
+
+    public String loadUserProfileData(int index) {
+        if (index>=0 && index<USER_FIELDS.length)
+            return mSharedPreferences.getString(USER_FIELDS[index],"");
+        else
+            return "";
+    }
+
+    public void saveUserPhoto(Uri uri){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.USER_PHOTO_KEY, uri.toString());
+        editor.apply();
+    }
+
+    public Uri loadUserPhoto() {
+        String res = mSharedPreferences.getString(ConstantManager.USER_PHOTO_KEY, "android.resource://com.softdesign.devintensive/drawable/header_bg");
+
+        return Uri.parse(res);
+    }
+
 
 }
