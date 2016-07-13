@@ -12,8 +12,10 @@
     <dimen name="size_medium_60">60dp</dimen>
     <dimen name="size_large_72">72dp</dimen>
     <dimen name="size_large_102">102dp</dimen>
+    <dimen name="size_large_112">112dp</dimen>
     <dimen name="size_largest_172">172dp</dimen>
     <dimen name="profile_image_size">256dp</dimen>
+    <dimen name="login_block_width">240dp</dimen>
 
     <!-- Spaces -->
     <dimen name="spacing_small_8">8dp</dimen>
@@ -34,7 +36,7 @@
 
     <dimen name="text_12sp">12sp</dimen>
     <dimen name="text_14sp">14sp</dimen>
-    <dimen name="text_24sp">24sp</dimen>
+    <dimen name="text_20sp">20sp</dimen>
     <dimen name="text_28sp">28sp</dimen>
 
     <dimen name="fab_right_space">8dp</dimen>
@@ -42,4 +44,6 @@
 
     <dimen name="profile_photo_width">512dp</dimen>
     <dimen name="profile_photo_height">256dp</dimen>
+
+    <dimen name="profile_avatar_size">60dp</dimen>
 </resources>

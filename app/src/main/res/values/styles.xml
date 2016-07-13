@@ -73,19 +73,12 @@
 
     <style name="summary">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">@dimen/size_medium_56</item>
-        <!--item name="android:paddingTop">@dimen/spacing_medial_28</item-->
-        <!--item name="android:paddingBottom">@dimen/spacing_medial_28</item-->
+        <item name="android:layout_height">@dimen/size_large_112</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@color/color_gray</item>
+        <item name="android:gravity">center</item>
     </style>
 
-    <style name="summary_pad">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/spacing_medial_28</item>
-        <item name="android:background">@color/color_gray</item>
-    </style>
 
     <style name="summary_divider">
         <item name="android:layout_width">@dimen/line_size</item>
@@ -155,8 +148,8 @@
     </style>
 
     <style name="drawer_avatar">
-        <item name="android:layout_width">@dimen/size_medium_60</item>
-        <item name="android:layout_height">@dimen/size_medium_60</item>
+        <item name="android:layout_width">@dimen/profile_avatar_size</item>
+        <item name="android:layout_height">@dimen/profile_avatar_size</item>
         <item name="android:src">@drawable/avatar</item>
         <item name="android:layout_marginTop">@dimen/spacing_normal_16</item>
     </style>
@@ -192,24 +185,14 @@
         <item name="android:src">@drawable/header_bg</item>
     </style>
 
-    <style name="login_main_block">
-        <item name="android:background">@color/color_white</item>
-        <item name="android:layout_marginLeft">@dimen/spacing_larger_72</item>
-        <item name="android:layout_marginRight">@dimen/spacing_larger_72</item>
-        <item name="android:padding">@dimen/spacing_normal_14</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:elevation">@dimen/spacing_small_8</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_centerInParent">true</item>
-    </style>
-
     <style name="login_inside_block">
-        <item name="android:layout_margin">@dimen/spacing_normal_14</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">@dimen/spacing_medial_24</item>
+        <item name="android:paddingRight">@dimen/spacing_medial_24</item>
+        <item name="android:paddingBottom">@dimen/spacing_medial_24</item>
+
     </style>
 
     <style name="login_button">
@@ -217,6 +200,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/spacing_medial_28</item>
         <item name="android:layout_marginRight">@dimen/spacing_medial_28</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal_16</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:text">Забыли пароль?</item>
         <item name="android:textAlignment">center</item>
@@ -225,8 +209,12 @@
         <item name="android:textSize">@dimen/text_14sp</item>
     </style>
 
-    <style name="login_button.red">
-        <item name="android:layout_marginBottom">@dimen/spacing_normal_16</item>
+    <style name="AppTheme.Button.Red" parent="Base.Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal_16</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:minWidth">126dp</item>
         <item name="android:paddingTop">@dimen/spacing_normal_14</item>
         <item name="android:paddingBottom">@dimen/spacing_normal_14</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -239,9 +227,11 @@
     <style name="login_header">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_red</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_small_8</item>
+        <item name="android:layout_marginTop">@dimen/spacing_small_8</item>
+        <item name="android:textColor">@color/color_accent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">@dimen/text_24sp</item>
+        <item name="android:textSize">@dimen/text_20sp</item>
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textAllCaps">true</item>
     </style>
