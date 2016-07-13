@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 style="@style/drawer_main">
 
-    <com.softdesign.devintensive.utils.RoundedImageView
+    <ImageView
         android:id="@+id/drawer_avatar"
         style="@style/drawer_avatar"/>
 
@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/user_name_txt"
             style="@style/drawer_user_info.name"
-            android:text="Дудник Александр"/>
+            android:text="@string/app_name"/>
 
         <TextView
             android:id="@+id/user_email_txt"

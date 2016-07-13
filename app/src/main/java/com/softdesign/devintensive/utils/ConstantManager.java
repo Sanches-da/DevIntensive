@@ -5,12 +5,20 @@ public interface ConstantManager {
     String EDIT_MODE_KEY = "EDIT_MODE_KEY";
 
     //user info
+    String USER_NAME_KEY = "USER_NAME_KEY";
+    String USER_LOGIN_KEY = "USER_LOGIN_KEY";
     String USER_PHONE_KEY = "USER_PHONE_KEY";
     String USER_MAIL_KEY = "USER_MAIL_KEY";
     String USER_VK_KEY = "USER_VK_KEY";
     String USER_GIT_KEY = "USER_GIT_KEY";
     String USER_ABOUT_KEY = "USER_ABOUT_KEY";
     String USER_PHOTO_KEY = "USER_PHOTO_KEY";
+    String USER_ID_KEY = "USER_ID_KEY";
+    String USER_RATING_VALUE = "USER_RATING_VALUE";
+    String USER_CODE_VALUE = "USER_CODE_VALUE";
+    String USER_PROJECTS_VALUE = "USER_PROJECTS_VALUE";
+    String USER_AVATAR_KEY = "USER_AVATAR_KEY";
+    String AUTH_TOKEN_KEY = "AUTH_TOKEN_KEY";
 
     int LOAD_PROFILE_PHOTO = 1;
 

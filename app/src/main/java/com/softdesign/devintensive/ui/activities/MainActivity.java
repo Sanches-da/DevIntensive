@@ -7,9 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -29,18 +29,21 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
+import com.softdesign.devintensive.data.network.ServiceGenerator;
+import com.softdesign.devintensive.utils.CircleTransform;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +55,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -97,6 +99,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.btn_profile_git)
     private ImageView mBtnGit;
 
+    @BindView(R.id.user_name_txt)
+    private TextView mUserNameDrawer;
+    @BindView(R.id.user_email_txt)
+    private TextView mUserMailDrawer;
+    @BindView(R.id.drawer_avatar)
+    private ImageView mUserAvatarDrawer;
+    @BindViews({R.id.user_name_txt, R.id.user_email_txt})
+    private List<TextView> mUserDrawer;
+
+
+    @BindViews({R.id.rating_et, R.id.code_lines_et, R.id.projects_et})
+    private List<TextView> mUserValues;
+    @BindView(R.id.rating_et)
+    private TextView mUserRating;
+    @BindView(R.id.code_lines_et)
+    private TextView mUserCode;
+    @BindView(R.id.projects_et)
+    private TextView mUserProjects;
+
     private AppBarLayout.LayoutParams mAppbarLayoutParams = null;
     private File mPhotoFile = null;
     private Uri mSelectedImage;
@@ -127,7 +148,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBtnVK = (ImageView) findViewById(R.id.btn_profile_vk);
         mBtnGit = (ImageView) findViewById(R.id.btn_profile_git);
 
-
         setupToolbar();
         setupDrawer();
 
@@ -139,7 +159,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBtnVK.setOnClickListener(this);
         mBtnGit.setOnClickListener(this);
 
+        NavigationView drawerLayout = (NavigationView) findViewById(R.id.navigation_view);
+        View drawerView = drawerLayout.getHeaderView(0);
+        mUserNameDrawer = (TextView)drawerView.findViewById(R.id.user_name_txt);
+        mUserMailDrawer = (TextView)drawerView.findViewById(R.id.user_email_txt) ;
+        mUserAvatarDrawer = (ImageView)drawerView.findViewById(R.id.drawer_avatar) ;
 
+        mUserDrawer = new ArrayList<>();
+        mUserDrawer.add(mUserNameDrawer);
+        mUserDrawer.add(mUserMailDrawer);
 
         mUserPhone = (EditText) findViewById(R.id.phone_et);
         mUserMail = (EditText) findViewById(R.id.email_et);
@@ -154,13 +182,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mUserInfo.add(mUserGit);
         mUserInfo.add(mUserAbout);
 
+        mUserRating = (TextView) findViewById(R.id.rating_et);
+        mUserCode = (TextView) findViewById(R.id.code_lines_et);
+        mUserProjects = (TextView) findViewById(R.id.projects_et);
+        mUserValues = new ArrayList<>();
+        mUserValues.add(mUserRating);
+        mUserValues.add(mUserCode);
+        mUserValues.add(mUserProjects);
+
 
         mDataManager = DataManager.getInstance();
 
-        loadUserInfoValue();
+
+
+        loadUserFields();
+        loadUserInfoValues();
+        loadDrawerInfo();
+
         Uri tempProfileImage = mDataManager.getPreferencesManager().loadUserPhoto();
         if (tempProfileImage != null) {
             insertProfileImage(tempProfileImage);
+        }
+        Uri tempAvatarImage = mDataManager.getPreferencesManager().loadUserAvatar();
+        if (tempAvatarImage != null) {
+            insertProfileAvatar(tempAvatarImage);
         }
 
         if (savedInstanceState == null) {
@@ -218,7 +263,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onPause();
 
         if (mEditMode) {
-            saveUserInfoValue();
+            saveUserFields();
         }
         Log.d(TAG, "onPause");
     }
@@ -435,12 +480,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (resultCode == RESULT_OK && data != null) {
                     mSelectedImage = data.getData();
                     insertProfileImage(mSelectedImage);
+                    ServiceGenerator.uploadFile(mSelectedImage);
                 }
                 break;
             case ConstantManager.REQUEST_CAMERA_PICTURE:
                 if (resultCode == RESULT_OK && mPhotoFile != null) {
                     mSelectedImage = Uri.fromFile(mPhotoFile);
                     insertProfileImage(mSelectedImage);
+                    ServiceGenerator.uploadFile(mSelectedImage);
                 }
                 break;
             case ConstantManager.REQUEST_AUTH:
@@ -481,7 +528,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             hideProfilePlaceholder();
             unlockToolbar();
             mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.color_white));
-            saveUserInfoValue();
+            saveUserFields();
         }
 
     }
@@ -561,25 +608,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * Загружает данные пользователя
      */
-    private void loadUserInfoValue() {
+    private void loadUserFields() {
         List<String> data = mDataManager.getPreferencesManager().loadUserProfileData();
         for (int i = 0; i < data.size(); i++) {
             mUserInfo.get(i).setText(data.get(i));
         }
-
     }
 
 
     /**
      * Сохраняет данные пользователя
      */
-    private void saveUserInfoValue() {
+    private void saveUserFields() {
         List<String> data = new ArrayList<>();
         for (int i = 0; i < mUserInfo.size(); i++) {
             data.add(mUserInfo.get(i).getText().toString());
         }
         mDataManager.getPreferencesManager().saveUserProfileData(data);
 
+    }
+
+    /**
+     * Загружает поля рейтинга из профиля пользователя
+     */
+    private void loadUserInfoValues(){
+        List<String> data = mDataManager.getPreferencesManager().getUserInfoValues();
+        for (int i = 0; i < data.size(); i++) {
+            mUserValues.get(i).setText(data.get(i));
+        }
+    }
+
+    /**
+     * Загружает поля рейтинга из профиля пользователя
+     */
+    private void loadDrawerInfo(){
+        List<String> data = mDataManager.getPreferencesManager().getDrawerInfo();
+        for (int i = 0; i < data.size(); i++) {
+            mUserDrawer.get(i).setText(data.get(i));
+        }
     }
 
     /**
@@ -766,6 +832,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .into(mProfileImage);
 
         mDataManager.getPreferencesManager().saveUserPhoto(selectedImage);
+    }
+
+    private void insertProfileAvatar(Uri selectedImage) {
+        Picasso.with(this)
+                .load(selectedImage)
+                .placeholder(R.drawable.avatar)
+                .resizeDimen(R.dimen.profile_avatar_size, R.dimen.profile_avatar_size)
+                .transform(new CircleTransform())
+                .centerCrop()
+                .into(mUserAvatarDrawer);
+
+        mDataManager.getPreferencesManager().saveUserAvatar(selectedImage);
     }
 
     /**
