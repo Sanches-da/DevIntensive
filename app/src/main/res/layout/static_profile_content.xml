@@ -1,0 +1,91 @@
+<android.support.v4.widget.NestedScrollView
+    android:id="@+id/scroller"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:layout_behavior=".ui.behaviors.CustomNestedScrollBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+
+            >
+
+
+
+            //--------------------Git----------------------
+
+            <LinearLayout style="@style/list_item">
+
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_social_github_black_24dp"/>
+
+                <LinearLayout style="@style/list_item_information">
+
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/repositoriesList"
+      >
+
+  </ListView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View style="@style/profile_list_item_divider"/>
+            />
+
+
+            //--------------------About----------------------
+
+            <LinearLayout style="@style/list_item">
+
+
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_account_circle_black_24dp"/>
+
+                <LinearLayout
+                    style="@style/list_item_information"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <EditText
+                            android:id="@+id/about_et"
+                            style="@style/list_item_edit_text"
+                            android:hint="@string/text_about"
+                            android:inputType="textMultiLine"
+                            android:text="Программист 1С, решил развиваться в сторону новых технологий. Изучаю Java и воспользовался возможностью изучить разработку под OS Android"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View style="@style/profile_list_item_divider"/>
+            />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

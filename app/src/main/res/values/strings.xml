@@ -34,4 +34,7 @@
     <string name="text_forgot_password">Забыли пароль?</string>
     <string name="text_password">Пароль</string>
     <string name="message_error_creating_file">Ошибка создания временного файла для сохранения фото!</string>
+    <string name="view_details_txt">Просмотр</string>
+    <string name="auth_error">Ошибка авторизации</string>
+    <string name="unexpected_error">"Что-то пошло не так.... Код: "</string>
 </resources>
