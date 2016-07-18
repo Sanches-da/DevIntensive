@@ -47,8 +47,11 @@
     <style name="list_item_divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_size</item>
-        <item name="android:layout_marginLeft">@dimen/spacing_larger_72</item>
         <item name="android:background">@color/color_gray_light</item>
+    </style>
+    
+    <style name="profile_list_item_divider" parent="list_item_divider">
+        <item name="android:layout_marginLeft">@dimen/spacing_larger_72</item>
     </style>
 
     <style name="list_item_information">
@@ -245,6 +248,12 @@
         <item name="android:focusable">true</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:layout_marginTop">@dimen/spacing_normal_16</item>
+    </style>
+
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/color_white</item>
+        <item name="android:textColorSecondary">@color/color_white</item>
+        <item name="android:actionMenuTextColor">@color/color_white</item>
     </style>
 
 </resources>

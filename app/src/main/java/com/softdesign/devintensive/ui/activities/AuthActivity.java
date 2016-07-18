@@ -135,10 +135,10 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                             loginSuccess(response.body());
                             break;
                         case 404:
-                            showSnackbar("Ошибка авторизации");
+                            showSnackbar(getString(R.string.auth_error));
                             break;
                         default:
-                            showSnackbar("Что-то пошло не так.... Код: " + response.code());
+                            showSnackbar(getString(R.string.unexpected_error) + response.code());
                     }
                 }
 

@@ -56,7 +56,8 @@
                     android:src="@drawable/ic_phone_in_talk_black_24dp"/>
             </LinearLayout>
 
-            <View style="@style/list_item_divider"/>
+            <View style="@style/profile_list_item_divider"/>
+/>
 
 
             //--------------------Email----------------------
@@ -92,7 +93,8 @@
                     android:src="@drawable/ic_send_black_24dp"/>
             </LinearLayout>
 
-            <View style="@style/list_item_divider"/>
+            <View style="@style/profile_list_item_divider"/>
+/>
 
             //--------------------VK----------------------
 
@@ -127,7 +129,8 @@
                     android:src="@drawable/ic_visibility_black_24dp"/>
             </LinearLayout>
 
-            <View style="@style/list_item_divider"/>
+            <View style="@style/profile_list_item_divider"/>
+/>
 
 
             //--------------------Git----------------------
@@ -163,7 +166,8 @@
                     android:src="@drawable/ic_visibility_black_24dp"/>
             </LinearLayout>
 
-            <View style="@style/list_item_divider"/>
+            <View style="@style/profile_list_item_divider"/>
+/>
 
 
             //--------------------About----------------------
@@ -198,7 +202,8 @@
 
             </LinearLayout>
 
-            <View style="@style/list_item_divider"/>
+            <View style="@style/profile_list_item_divider"/>
+/>
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

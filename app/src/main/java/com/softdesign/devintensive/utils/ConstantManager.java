@@ -20,6 +20,10 @@ public interface ConstantManager {
     String USER_AVATAR_KEY = "USER_AVATAR_KEY";
     String AUTH_TOKEN_KEY = "AUTH_TOKEN_KEY";
 
+    String PARCELABLE_KEY = "USER_DTO";
+
+
+
     int LOAD_PROFILE_PHOTO = 1;
 
     int REQUEST_CAMERA_PICTURE = 99;

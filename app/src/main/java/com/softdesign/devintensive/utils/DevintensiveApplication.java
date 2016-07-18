@@ -22,7 +22,8 @@ public class DevintensiveApplication extends Application{
     public void onCreate() {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mContext = this;
+        //mContext = this;
+        mContext = getApplicationContext();
 
         super.onCreate();
     }
