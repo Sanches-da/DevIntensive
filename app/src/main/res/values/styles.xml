@@ -49,7 +49,7 @@
         <item name="android:layout_height">@dimen/line_size</item>
         <item name="android:background">@color/color_gray_light</item>
     </style>
-    
+
     <style name="profile_list_item_divider" parent="list_item_divider">
         <item name="android:layout_marginLeft">@dimen/spacing_larger_72</item>
     </style>
@@ -254,6 +254,18 @@
         <item name="android:textColorPrimary">@color/color_white</item>
         <item name="android:textColorSecondary">@color/color_white</item>
         <item name="android:actionMenuTextColor">@color/color_white</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
     </style>
 
 </resources>

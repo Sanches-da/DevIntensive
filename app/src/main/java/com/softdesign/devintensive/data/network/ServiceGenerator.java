@@ -2,13 +2,16 @@ package com.softdesign.devintensive.data.network;
 
 
 import android.net.Uri;
-import android.util.Log;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.softdesign.devintensive.data.interceptors.HeaderInterceptor;
-import com.softdesign.devintensive.utils.App_Config;
+import com.softdesign.devintensive.utils.AppConfig;
+import com.softdesign.devintensive.utils.DevintensiveApplication;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -25,7 +28,7 @@ public class ServiceGenerator {
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static Retrofit.Builder sBuilder =
             new Retrofit.Builder()
-                    .baseUrl(App_Config.BASE_URL)
+                    .baseUrl(AppConfig.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createService(Class<S> serviceClass) {
@@ -34,6 +37,10 @@ public class ServiceGenerator {
 
         httpClient.addInterceptor(new HeaderInterceptor());
         httpClient.addInterceptor(logging);
+        httpClient.connectTimeout(AppConfig.MAX_CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
+        httpClient.readTimeout(AppConfig.MAX_READ_TIMEOUT, TimeUnit.MILLISECONDS);
+        httpClient.cache(new Cache(DevintensiveApplication.getContext().getCacheDir(), Integer.MAX_VALUE));
+        httpClient.addNetworkInterceptor(new StethoInterceptor());
 
         Retrofit retrofit = sBuilder
                 .client(httpClient.build())

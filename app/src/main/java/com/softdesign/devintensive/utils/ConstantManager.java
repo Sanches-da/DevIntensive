@@ -22,6 +22,7 @@ public interface ConstantManager {
 
     String PARCELABLE_KEY = "USER_DTO";
 
+    String CHRONOS_LOAD_USERS = "CHRONOS_LOAD_USERS";
 
 
     int LOAD_PROFILE_PHOTO = 1;
@@ -32,4 +33,6 @@ public interface ConstantManager {
     int REQUEST_PERMISSION_CAMERA_CODE = 71;
     int REQUEST_PERMISSION_PHONE_CODE = 72;
     int REQUEST_AUTH = 100;
+
+    int SEARCH_DELAY = 3000;
 }

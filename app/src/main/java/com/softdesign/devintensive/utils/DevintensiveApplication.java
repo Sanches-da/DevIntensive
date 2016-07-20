@@ -3,37 +3,44 @@ package com.softdesign.devintensive.utils;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 
-import com.softdesign.devintensive.ui.activities.MainActivity;
+import com.facebook.stetho.Stetho;
+import com.softdesign.devintensive.data.storage.models.DaoMaster;
+import com.softdesign.devintensive.data.storage.models.DaoSession;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
+import org.greenrobot.greendao.database.Database;
 
 public class DevintensiveApplication extends Application{
 
-    private static SharedPreferences mSharedPreferences;
-    private static Context mContext;
+    private static SharedPreferences sSharedPreferences;
+    private static Context sContext;
+    private static DaoSession sDaoSession;
 
     @Override
     public void onCreate() {
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //mContext = this;
-        mContext = getApplicationContext();
-
         super.onCreate();
+
+        sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sContext = getApplicationContext();
+
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "devintensive-db");
+        Database db = helper.getReadableDb();
+        sDaoSession = new DaoMaster(db).newSession();
+
+        Stetho.initializeWithDefaults(this);
     }
 
     public static SharedPreferences getSharedPreferences() {
-        return mSharedPreferences;
+        return sSharedPreferences;
     }
 
     public static Context getContext() {
-        return mContext;
+        return sContext;
     }
 
+    public static DaoSession getDaoSession() {
+        return sDaoSession;
+    }
 }

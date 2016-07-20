@@ -42,6 +42,7 @@ import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.ServiceGenerator;
 import com.softdesign.devintensive.utils.CircleTransform;
 import com.softdesign.devintensive.utils.ConstantManager;
+import com.softdesign.devintensive.utils.UiHelper;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -330,13 +331,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 item.setChecked(true);
                 mNavigationDrawer.closeDrawer(GravityCompat.START);
 
-                if (item.getItemId() == R.id.user_profile_auth) { //Запуск активити логина
-                    Intent intent = new Intent(getApplicationContext(), AuthActivity.class);
-                    startActivityForResult(intent, ConstantManager.REQUEST_AUTH);
-                    return false;
+                switch (item.getItemId()) {
+                    case R.id.user_profile_menu:
+                        Intent profile_intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(profile_intent);
+                        break;
+                    case R.id.team_menu:
+                        Intent team_intent = new Intent(getApplicationContext(), UserListActivity.class);
+                        startActivity(team_intent);
+                        break;
                 }
 
-                showSnackbar(item.getTitle().toString());
                 return false;
             }
         });
@@ -488,11 +493,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     mSelectedImage = Uri.fromFile(mPhotoFile);
                     insertProfileImage(mSelectedImage);
                     ServiceGenerator.uploadFile(mSelectedImage);
-                }
-                break;
-            case ConstantManager.REQUEST_AUTH:
-                if (resultCode == RESULT_OK) {
-                    showSnackbar("User is logged in!");
                 }
                 break;
         }
@@ -824,24 +824,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * @param selectedImage
      */
     private void insertProfileImage(Uri selectedImage) {
-        Picasso.with(this)
-                .load(selectedImage)
-                .placeholder(R.drawable.header_bg)
-                .resizeDimen(R.dimen.profile_photo_width, R.dimen.profile_photo_height)
-                .centerCrop()
-                .into(mProfileImage);
+//        Picasso mPicasso = mDataManager.getPicasso();
+//        mPicasso.with(this)
+//                .load(selectedImage)
+//                .placeholder(R.drawable.header_bg)
+//                .resizeDimen(R.dimen.profile_photo_width, R.dimen.profile_photo_height)
+//                .centerCrop()
+//                .into(mProfileImage);
+
+        UiHelper.getCachedImagePicasso(selectedImage.toString(), mProfileImage, getResources().getDrawable(R.drawable.user_bg), false);
 
         mDataManager.getPreferencesManager().saveUserPhoto(selectedImage);
     }
 
     private void insertProfileAvatar(Uri selectedImage) {
-        Picasso.with(this)
-                .load(selectedImage)
-                .placeholder(R.drawable.avatar)
-                .resizeDimen(R.dimen.profile_avatar_size, R.dimen.profile_avatar_size)
-                .transform(new CircleTransform())
-                .centerCrop()
-                .into(mUserAvatarDrawer);
+//        Picasso mPicasso = mDataManager.getPicasso();
+//        mPicasso.with(this)
+//                .load(selectedImage)
+//                .placeholder(R.drawable.avatar)
+//                .resizeDimen(R.dimen.profile_avatar_size, R.dimen.profile_avatar_size)
+//                .transform(new CircleTransform())
+//                .centerCrop()
+//                .into(mUserAvatarDrawer);
+        UiHelper.getCachedImagePicasso(selectedImage.toString(), mUserAvatarDrawer, getResources().getDrawable(R.drawable.avatar), true);
 
         mDataManager.getPreferencesManager().saveUserAvatar(selectedImage);
     }
