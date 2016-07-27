@@ -37,4 +37,8 @@
     <string name="view_details_txt">Просмотр</string>
     <string name="auth_error">Ошибка авторизации</string>
     <string name="unexpected_error">"Что-то пошло не так.... Код: "</string>
+    <string name="user_search_text">Поиск пользователя</string>
+    <string name="search_user_query_text">Введите имя пользователя</string>
+    <string name="dev_intensive_2016">Dev-Intensive 2016</string>
+
 </resources>

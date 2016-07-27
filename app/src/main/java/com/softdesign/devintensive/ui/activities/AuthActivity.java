@@ -19,17 +19,12 @@ import com.softdesign.devintensive.data.network.req.UserLoginReq;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
 import com.softdesign.devintensive.utils.NetworkStatusChecker;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
@@ -45,6 +40,8 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     private CoordinatorLayout mCoordinatorLayout;
 
     private DataManager mDataManager;
+//    private RepositoryDao mRepositoryDao;
+//    private UserDao mUserDao;
 
 
     /**
@@ -66,6 +63,8 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         mRememberPassword.setOnClickListener(this);
 
         mDataManager = DataManager.getInstance();
+//        mUserDao = mDataManager.getDaoSession().getUserDao();
+//        mRepositoryDao = mDataManager.getDaoSession().getRepositoryDao();
 
     }
 
@@ -120,8 +119,23 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         saveDrawerInfo(userInfo);
         saveUserPhotos(userInfo);
 
-        Intent login = new Intent(this, MainActivity.class);
-        startActivity(login);
+//        saveUserInDb();
+//
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Intent login = new Intent(AuthActivity.this, UserListActivity.class);
+//                startActivity(login);
+//            }
+//        }, AppConfig.START_DELAY);
+
+
+        Intent intent = getIntent();
+        if (intent!=null){
+            this.setResult(RESULT_OK);
+            this.finish();
+        }
     }
 
     private void signIn() {
@@ -216,7 +230,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                    if (!response.isSuccessful()){
+                    if (!response.isSuccessful()) {
                         throw new IOException("Unexpected code " + response);
                     } else {
                         FileOutputStream writer = new FileOutputStream(photo);
@@ -239,7 +253,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                    if (!response.isSuccessful()){
+                    if (!response.isSuccessful()) {
                         throw new IOException("Unexpected code " + response);
                     } else {
                         FileOutputStream writer = new FileOutputStream(avatar);
@@ -249,10 +263,12 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
                 }
             });
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
+
+
+}

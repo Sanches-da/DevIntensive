@@ -3,32 +3,30 @@ package com.softdesign.devintensive.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
 import com.softdesign.devintensive.data.network.res.UserListRes;
+import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.UserAdapter;
 import com.softdesign.devintensive.utils.ConstantManager;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserListActivity extends BaseActivity {
     private CoordinatorLayout mCoordinatorLayout;
@@ -38,7 +36,11 @@ public class UserListActivity extends BaseActivity {
 
     private DataManager mDataManager;
     private UserAdapter mUserAdapter;
-    private List<UserListRes.UserData> mUsers;
+    private List<User> mUsers;
+    private MenuItem mSearchItem;
+    private String mQuery;
+
+    private Handler mHandler;
 
 
     @Override
@@ -57,9 +59,11 @@ public class UserListActivity extends BaseActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
+        mHandler = new Handler();
+
         setupToolbar();
         setupDrawer();
-        loadUsers();
+        loadUsersFromDb();
 
 
     }
@@ -84,43 +88,13 @@ public class UserListActivity extends BaseActivity {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
-    private void loadUsers() {
-        Call<UserListRes> call = mDataManager.getUserList();
-        call.enqueue(new Callback<UserListRes>() {
-                         @Override
-                         public void onResponse(Call<UserListRes> call, Response<UserListRes> response) {
-                             switch (response.code()) {
-                                 case 200:
-                                     mUsers = response.body().getData();
-                                     mUserAdapter = new UserAdapter(mUsers, new UserAdapter.UserViewHolder.CustomClickListener() {
-                                         @Override
-                                         public void onUserClikListener(int position) {
-
-                                             UserDTO user  = new UserDTO(mUsers.get(position));
-                                             Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
-                                             profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, user);
-
-                                             startActivity(profileIntent);
-
-                                         }
-                                     });
-                                     mRecyclerView.setAdapter(mUserAdapter);
-                                     break;
-                                 case 404:
-                                     showSnackbar(getString(R.string.auth_error));
-                                     break;
-                                 default:
-                                     showSnackbar(getString(R.string.unexpected_error) + response.code());
-                             }
-                         }
-
-                         @Override
-                         public void onFailure(Call<UserListRes> call, Throwable t) {
-                             //TODO Обработать ошибки
-                         }
-                     }
-
-        );
+    private void loadUsersFromDb() {
+        if (mDataManager.getUserListFromDb().size() == 0) {
+            showSnackbar("Список пользователей не может быть загружен");
+        } else {
+            showUsers(mDataManager.getUserListFromDb());
+        }
+        mRecyclerView.setAdapter(mUserAdapter);
     }
 
     /**
@@ -148,17 +122,103 @@ public class UserListActivity extends BaseActivity {
                 item.setChecked(true);
                 mNavigationDrawer.closeDrawer(GravityCompat.START);
 
-                if (item.getItemId() == R.id.user_profile_auth) { //Запуск активити логина
-                    Intent intent = new Intent(getApplicationContext(), AuthActivity.class);
-                    startActivityForResult(intent, ConstantManager.REQUEST_AUTH);
-                    return false;
+                switch (item.getItemId()) {
+                    case R.id.user_profile_menu:
+                        Intent profile_intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(profile_intent);
+                        break;
+                    case R.id.team_menu:
+                        Intent team_intent = new Intent(getApplicationContext(), UserListActivity.class);
+                        startActivity(team_intent);
+                        break;
                 }
 
-                showSnackbar(item.getTitle().toString());
                 return false;
             }
         });
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
 
+        mSearchItem = menu.findItem(R.id.search_action);
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
+        searchView.setQueryHint(getString(R.string.search_user_query_text));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                              @Override
+                                              public boolean onQueryTextSubmit(String s) {
+                                                  return false;
+                                              }
+
+                                              @Override
+                                              public boolean onQueryTextChange(String s) {
+                                                  showUsersByQuery(s);
+                                                  return false;
+                                              }
+
+                                          }
+
+        );
+        searchView.setOnCloseListener(new SearchView.OnCloseListener()
+
+                                      {
+                                          @Override
+                                          public boolean onClose() {
+                                              mHandler.removeCallbacks(new Runnable() {
+                                                  @Override
+                                                  public void run() {
+
+                                                  }
+                                              });
+                                              showUsers(mDataManager.getUserListFromDb());
+                                              return false;
+                                          }
+                                      }
+
+        );
+
+        return super.
+
+                onPrepareOptionsMenu(menu);
+    }
+
+    private void showUsers(List<User> users) {
+        mUsers = users;
+        mUserAdapter = new UserAdapter(mUsers, new UserAdapter.UserViewHolder.CustomClickListener() {
+            @Override
+            public void onUserClikListener(int position) {
+
+                UserDTO user = new UserDTO(mUsers.get(position));
+                Intent profileIntent = new Intent(UserListActivity.this, ProfileUserActivity.class);
+                profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, user);
+
+                startActivity(profileIntent);
+
+            }
+        });
+        mRecyclerView.swapAdapter(mUserAdapter, false);
+    }
+
+    private void showUsersByQuery(String query) {
+        mQuery = query;
+
+        Runnable searchUser = new Runnable() {
+            @Override
+            public void run() {
+                showUsers(mDataManager.getUserListByName(mQuery));
+            }
+        };
+
+        mHandler.removeCallbacks(searchUser);
+
+        if (query.isEmpty()) {
+            mHandler.post(searchUser);
+        } else {
+            mHandler.postDelayed(searchUser, ConstantManager.SEARCH_DELAY);
+        }
+
+
+    }
 }
